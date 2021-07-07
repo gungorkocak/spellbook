@@ -1,0 +1,170 @@
+# 👋 Hello Elixir with Livebook
+
+## ⛴ Onboard!
+
+### 1. Share the current session link
+
+password: `verymuchsecret42`
+
+### 2. Change your username
+
+↙️ From bottom left corner, click your avatar
+
+![](images/click_avatar.png)
+
+Change your Display name & save
+
+![](images/change_username.png)
+
+### 3. Say Hello ✋
+
+👇 Add a function with your name that outputs your special hello message inside the `Hello` module below.
+
+```elixir
+defmodule Hello do
+  @moduledoc """
+  A warm way to say hi!
+  """
+
+  # Say hi with a function!
+  def gungor(), do: IO.puts("☠️ Ahoy!")
+end
+
+import IEx.Helpers
+
+for {fun, _} <- Hello.__info__(:functions) do
+  apply(Hello, fun, [])
+end
+```
+
+### 3. Follow me on Livebook!
+
+⬅️ From left side, click Connected users & pin gungor
+
+![](images/follow_me.png)
+
+## 💥 Crash Course
+
+### Basic Data Types
+
+**Numbers**
+
+```elixir
+integer = 255
+binary = 0b0110
+hex = 0x1F
+float = 3.14
+```
+
+```elixir
+2 + 2
+2 - 1
+2 * 5
+(10 / 5) |> IO.inspect(label: ">>>")
+
+h(Kernel./())
+```
+
+If you need integer division or the division remainder (i.e., modulo), Elixir comes with two helpful functions to achieve this:
+
+```elixir
+div(10, 5)
+rem(10, 3)
+```
+
+**Atoms**
+
+An atom is a constant whose name is its value.
+
+```elixir
+:atom
+:atom == :not_an_atom
+is_atom(Hello)
+
+i(Hello)
+```
+
+**Booleans**
+
+Elixir supports `true` and `false` as booleans; everything is truthy except for `false` and `nil`:
+
+```elixir
+true? = true
+false? = false
+true == true
+
+i(true)
+```
+
+Elixir provides the `||`, `&&`, and `!` boolean operators. These support any types:
+
+```elixir
+-20 || true
+false || 42
+42 && true
+42 && nil
+!42
+!false
+```
+
+There are three additional operators whose first argument must be a boolean (`true` or `false`)
+
+```elixir
+true and 42
+false or true
+not false
+# raises error
+42 and true
+```
+
+Elixir comes with all the comparison operators we’re used to: `==`, `!=`, `===`, `!==`, `<=`, `>=`, `<`, and `>`.
+
+```elixir
+1 > 2
+1 != 2
+2 == 2
+2 == 2.0
+2 === 2.0
+2 <= 3
+```
+
+An important feature of Elixir is that any two types can be compared; this is particularly useful in sorting. We don’t need to memorize the sort order, but it is important to be aware of it:
+
+```
+number < atom < reference < function < port < pid < tuple < map < list < bitstring
+```
+
+```elixir
+:hello > 999
+```
+
+**Strings**
+
+Strings in Elixir are UTF-8 encoded and are wrapped in double quotes:
+
+```elixir
+"Hello"
+# this is not a string but a charlist
+'Hello'
+
+i("Hello")
+```
+
+**String Interpolation**
+
+```elixir
+name = "Joe"
+"Hello #{name}!"
+```
+
+**String Concatenation**
+
+```elixir
+"Hello " <> name <> "!"
+```
+
+## 🛠 Build: Counter
+
+
+
+## 🛠 Build: Todo
