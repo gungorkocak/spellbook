@@ -41,7 +41,32 @@ end
 
 ![](images/follow_me.png)
 
-## 💥 Crash Course
+## 💥 Intro: Elixir as a Language
+
+In essence, Elixir is a **dynamically typed**, **functional**, **compiled** and **concurrency oriented** programming language.
+
+It builts itself on the foundations of `erlang` programming language, and its virtual machine `beam`.
+
+Leveraging the availability of executing code at compile time, under the hood, Elixir builds almost every piece of its idioms with **compile time macros**.
+
+Let's try to understand what it means:
+
+```elixir
+if 10 > 5 do
+  "Yup!"
+else
+  "Nay!"
+end
+
+if 5 > 10, do: "Yup!", else: "Nay!"
+if(5 > 10, do: "Yup!", else: "Nay!")
+
+quote do
+  if(5 > 10, do: "Yup!", else: "Nay!")
+end
+```
+
+Before we start with details of the language, let's import some helpers from Elixir to make things a bit obvious:
 
 ```elixir
 import IEx.Helpers, only: [h: 1, i: 1, t: 1]
