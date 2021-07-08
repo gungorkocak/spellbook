@@ -655,4 +655,139 @@ So, if you have a more specific function inside the collection's module, you sho
 
 ## 🛠 Build: Counter
 
+Let's start building with a very boring but conventional example, `Counter`.
+
+Since we are not running code in browser, we can also rely on `CounterTest` module provided to validate our code if we want.
+
+```elixir
+defmodule Counter do
+  # let's write some functions
+end
+
+# start test application before defining tests.
+# ExUnit comes baked into Elixir.
+ExUnit.start(autorun: false)
+
+defmodule CounterTest do
+  use ExUnit.Case, async: true
+
+  test "new/0 initializes counter with 0" do
+    assert Counter.new() == 0
+  end
+
+  test "new/1 initializes counter with given count" do
+    assert Counter.new(5) == 5
+  end
+
+  test "increment/0 increments count by 1" do
+    count = Counter.new()
+
+    incr_once = Counter.increment(count)
+    assert incr_once == 1
+
+    incr_twice = count |> Counter.increment() |> Counter.increment()
+    assert incr_twice == 2
+
+    incr_thrice = count |> Counter.increment() |> Counter.increment() |> Counter.increment()
+    assert incr_thrice == 3
+  end
+
+  test "decrement/0 decrements count by 1" do
+    count = Counter.new(3)
+
+    decr_once = Counter.decrement(count)
+    assert decr_once == 2
+
+    decr_twice = count |> Counter.decrement() |> Counter.decrement()
+    assert decr_twice == 1
+
+    decr_thrice = count |> Counter.decrement() |> Counter.decrement() |> Counter.decrement()
+    assert decr_thrice == 0
+  end
+
+  test "decrement/0 does not decrement count when it is 0" do
+    count = Counter.new(2)
+
+    decr_once = Counter.decrement(count)
+    assert decr_once == 1
+
+    decr_twice = count |> Counter.decrement() |> Counter.decrement()
+    assert decr_twice == 0
+
+    decr_thrice = count |> Counter.decrement() |> Counter.decrement() |> Counter.decrement()
+    assert decr_thrice == 0
+  end
+end
+
+ExUnit.run()
+```
+
 ## 🛠 Build: Todo
+
+Our second boring but conventional thing to build is `Todo`.
+
+Again, we don't have a fancy todoapp ui, but we can still reference the tests.
+
+```elixir
+defmodule Todo do
+  # let's write our functions here
+end
+
+# start test application before defining tests.
+# ExUnit comes baked into Elixir.
+ExUnit.start(autorun: false)
+
+defmodule TodoTest do
+  use ExUnit.Case, async: true
+
+  test "new/0 returns an empty todo list" do
+    assert Todo.new() == []
+  end
+
+  test "new/1 returns given list" do
+    todos = [%{title: "DO NOTHING", done?: false}]
+
+    assert Todo.new(todos) == todos
+  end
+
+  test "add/2 adds given todo item at the end of the list" do
+    todos = Todo.new() |> Todo.add("MAYBE DO SOMETHING")
+    assert [%{title: "MAYBE DO SOMETHING"}] = todos
+
+    todos = todos |> Todo.add("SLOWLY DO SOMETHING")
+
+    assert [
+             %{title: "MAYBE DO SOMETHING"},
+             %{title: "SLOWLY DO SOMETHING"}
+           ] = todos
+
+    todos = todos |> Todo.add("LETS DO SOMETHING")
+
+    assert [
+             %{title: "MAYBE DO SOMETHING"},
+             %{title: "SLOWLY DO SOMETHING"},
+             %{title: "LETS DO SOMETHING"}
+           ] = todos
+  end
+
+  test "add/2 adds given todo by setting :done? to false as default" do
+    todos = Todo.new() |> Todo.add("MAYBE DO SOMETHING")
+    assert [%{title: "MAYBE DO SOMETHING", done?: false}] = todos
+  end
+
+  test "remove/2 removes the given todo from the todo list" do
+    todos =
+      Todo.new()
+      |> Todo.add("MAYBE DO SOMETHING")
+      |> Todo.add("SLOWLY DO SOMETHING")
+      |> Todo.add("LETS DO SOMETHING")
+
+    assert [
+             %{title: "MAYBE DO SOMETHING"},
+             %{title: "LETS DO SOMETHING"}
+           ] = Todo.remove(todos, "SLOWLY DO SOMETHING")
+  end
+end
+
+ExUnit.run()
+```
